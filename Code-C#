@@ -1,0 +1,215 @@
+namespace BTD6QuincyFigure
+{
+    internal class Program
+    {
+
+        static void Main(string[] args)
+        {
+            bool doAgain = true;
+            while (doAgain)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkBlue;
+                Console.WriteLine(@"
+ ██████  ██    ██ ██ ███    ██  ██████ ██    ██     ███████ ██  ██████  ██    ██ ██████  ███████ 
+██    ██ ██    ██ ██ ████   ██ ██       ██  ██      ██      ██ ██       ██    ██ ██   ██ ██      
+██    ██ ██    ██ ██ ██ ██  ██ ██        ████       █████   ██ ██   ███ ██    ██ ██████  █████   
+██ ▄▄ ██ ██    ██ ██ ██  ██ ██ ██         ██        ██      ██ ██    ██ ██    ██ ██   ██ ██      
+ ██████   ██████  ██ ██   ████  ██████    ██        ██      ██  ██████   ██████  ██   ██ ███████ 
+    ▀▀                                                                                           
+");
+                Console.WriteLine(@"
+ ██████  █████  ██       ██████ ██    ██ ██       █████  ████████  ██████  ██████  
+██      ██   ██ ██      ██      ██    ██ ██      ██   ██    ██    ██    ██ ██   ██ 
+██      ███████ ██      ██      ██    ██ ██      ███████    ██    ██    ██ ██████  
+██      ██   ██ ██      ██      ██    ██ ██      ██   ██    ██    ██    ██ ██   ██ 
+ ██████ ██   ██ ███████  ██████  ██████  ███████ ██   ██    ██     ██████  ██   ██ 
+");
+                Console.ForegroundColor = ConsoleColor.White;
+                bool _do = true;
+                int quincyCost = 0;
+                int roundBought = 1;
+                int roundCalculate = 1;
+                int roundGeraldoBought = 1;
+                while (_do)
+                {
+                    Console.Write("What Difficulty (Easy/Medium/Hard/Impoppable)?: ");
+                    Console.ForegroundColor= ConsoleColor.Cyan;
+                    string difficulty = Console.ReadLine();
+                    Console.ForegroundColor = ConsoleColor.White;
+                    if (difficulty.ToUpper() == "EASY")
+                    {
+                        quincyCost = 555;
+                        _do = false;
+                    }
+                    else if (difficulty.ToUpper() == "MEDIUM")
+                    {
+                        quincyCost = 650;
+                        _do = false;
+                    }
+                    else if (difficulty.ToUpper() == "HARD")
+                    {
+                        quincyCost = 700;
+                        _do = false;
+                    }
+                    else if (difficulty.ToUpper() == "IMPOPPABLE")
+                    {
+                        quincyCost = 780;
+                        _do = false;
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Not a valid difficulty");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine();
+                    }
+                }
+                _do = true;
+                Console.WriteLine();
+                while (_do)
+                {
+                    while (_do)
+                    {
+                        Console.Write("what Round did you buy Geraldo?: ");
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        if (!int.TryParse(Console.ReadLine(), out roundGeraldoBought) || roundGeraldoBought < 1)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Not a valid round!");
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.WriteLine();
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.White;
+                            _do = false;
+                        }
+                    }
+                    _do = true;
+
+                    Console.Write("What Round did you buy the Figure?: ");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    if (!int.TryParse(Console.ReadLine(), out roundBought) || roundBought < 1 || roundBought < roundGeraldoBought)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Not a valid round!");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine();
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.White;
+                        roundBought -= roundGeraldoBought;
+                        Console.WriteLine("Rounds since Geraldo was bought: " + roundBought);
+                        _do = false;
+                    }
+                }
+                _do = true;
+                Console.WriteLine();
+                while (_do)
+                {
+                    Console.Write("What Round do you want to calculate for?: ");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    if (!int.TryParse(Console.ReadLine(), out roundCalculate) || roundCalculate < 1 || roundCalculate < roundBought)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Not a valid round!");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine();
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.White;
+                        roundCalculate -= roundGeraldoBought;
+                        if (roundCalculate >= roundBought)
+                        {
+                            Console.WriteLine($"Rounds since Geraldo was bought: {roundCalculate}");
+                            _do = false;
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Not a valid round!");
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.WriteLine();
+                        }
+
+                    }
+                }
+                int finalCost = CalculateCost(quincyCost, 1, roundCalculate);
+                _do = true;
+                Console.WriteLine();
+                while (_do)
+                {
+                    Console.Write("Do you have \"Better Sell Deals?\"(Y/N): ");
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    string inputYN = Console.ReadLine();
+                    Console.ForegroundColor = ConsoleColor.White;
+                    if (inputYN.ToUpper() == "Y")
+                    {
+                        Console.WriteLine($"Sell Price at Round {roundCalculate}: {finalCost}");
+                        int buyPrice = CalculateCost(quincyCost, 1, roundBought);
+                        int profit = finalCost - buyPrice;
+                        Console.WriteLine($"Bought for: {buyPrice}. Profit: {profit}");
+                        _do = false;
+                    }
+                    else if (inputYN.ToUpper() == "N")
+                    {
+                        int sellPrice = (int)Math.Floor(finalCost * 0.95);
+                        Console.WriteLine($"Sell Price at Round {roundCalculate}: {sellPrice}");
+                        int buyPrice = CalculateCost(quincyCost, 1, roundBought);
+                        int profit = sellPrice - buyPrice;
+                        Console.WriteLine($"Bought for: {buyPrice}. Profit: {profit}");
+                        _do = false;
+                    }
+                    Console.WriteLine();
+                }
+                Console.Write("Calculate again? (Y/N): ");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                string inputYn2 = Console.ReadLine();
+                Console.ForegroundColor = ConsoleColor.White;
+                if (inputYn2.ToUpper() == "Y")
+                {
+                    doAgain = true;
+                }
+                else if (inputYn2.ToUpper() == "N")
+                {
+                    doAgain = false;
+                }
+                else
+                {
+                    doAgain= false;
+                }
+                Console.WriteLine();
+                Console.Clear();
+            }
+            Console.ReadKey(true);
+        }
+
+        static int CalculateCost(int quincyCost, int roundStart, int roundCalculate)
+        {
+            double endCost = quincyCost;
+            for (int i = roundStart; i < roundCalculate; i++)
+            {
+                if (i <= 30)
+                {
+                    endCost *= 1.10;
+                }
+                else if (i <= 80)
+                {
+                    endCost *= 1.05;
+                }
+                else
+                {
+                    endCost *= 1.02;
+                }
+                if (endCost > 1000000)
+                {
+                    return 1000000;
+                }
+            }
+            int endCostInt = (int)Math.Round(endCost);
+            return endCostInt;
+        }
+    }
+}
